@@ -10,28 +10,12 @@ static int _pcount_stm(stm stmt)
 {
     if (stmt->kind == compoundStm) return _pcount_compoundstm(stmt);
     else if (stmt->kind == printStm) return _pcount_printstm(stmt);
+    else return _pcount_exp(stmt->u.assign.exprs);
 }
 
 static int _pcount_compoundstm(stm c_stm)
 {
-    // int count = 0;
-    // if (c_stm->u.compound.stm1->kind == compoundStm) count = _pcount_compoundstm(c_stm->u.compound.stm1);
-    // else if (c_stm->u.compound.stm1->kind == printStm) count = _pcount_printstm(c_stm->u.compound.stm1);
-    // else count = _pcount_exp(c_stm->u.compound.stm1->u.assign.exprs);
-
-    // if (c_stm->u.compound.stm2->kind == compoundStm) count = _max(count, _pcount_compoundstm(c_stm->u.compound.stm2));
-    // else if (c_stm->u.compound.stm2->kind == printStm) count = _max(count, _pcount_printstm(c_stm->u.compound.stm2));
-    // else count = _max(count, _pcount_exp(c_stm->u.compound.stm2->u.assign.exprs));
-
-    // return count;
-    return _max(_pcount_subcompountstm(c_stm->u.compound.stm1), _pcount_subcompountstm(c_stm->u.compound.stm2));
-}
-
-static int _pcount_subcompountstm(stm stmt)
-{
-    if (stmt->kind == compoundStm) return _pcount_compoundstm(stmt);
-    else if (stmt->kind == printStm) return _pcount_printstm(stmt);
-    else return _pcount_exp(stmt->u.assign.exprs);
+    return _max(_pcount_stm(c_stm->u.compound.stm1), _pcount_stm(c_stm->u.compound.stm2));
 }
 
 static int _pcount_printstm(stm p_stm)

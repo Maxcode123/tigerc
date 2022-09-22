@@ -5,9 +5,9 @@ OBJ=obj
 OBJS=$(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 BINDIR=bin
 BIN=$(BINDIR)/main
-ARGS=-Wno-implicit-function-declaration
+ARGS=
 
-run:
+run: all
 	$(BIN)
 
 all: $(BIN)
