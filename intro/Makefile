@@ -3,20 +3,18 @@ SRC=src
 SRCS=$(wildcard $(SRC)/*.c)
 OBJ=obj
 OBJS=$(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
-BINDIR=bin
-BIN=$(BINDIR)/main
+TEST=test
 ARGS=
 
-run: all
-	$(BIN)
 
-all: $(BIN)
+test-maxargs: $(TEST)/bin/maxargs
+	$<
 
-$(BIN): $(OBJS)
-	$(CC) $(OBJS) -o $@
+$(TEST)/bin/maxargs: $(TEST)/maxargs_test.c $(OBJ)/funcs.o $(OBJ)/types.o $(OBJ)/util.o
+	$(CC) $^ -o $@ -lcriterion
 
 $(OBJ)/%.o: $(SRC)/%.c
 	$(CC) $(ARGS) -c $< -o $@
 
 clean:
-	rm -rf bin/* obj/*
+	rm -rf obj/* test/bin/*
