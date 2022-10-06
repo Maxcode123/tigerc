@@ -1,4 +1,4 @@
-#include "funcs.h"
+#include "maxargs.h"
 
 
 int maxargs(stm prog)

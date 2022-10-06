@@ -1,6 +1,6 @@
 #include <criterion/criterion.h>
 
-#include "../src/funcs.h"
+#include "../src/maxargs.h"
 
 Test(maxargs_test, prog1)
 {
