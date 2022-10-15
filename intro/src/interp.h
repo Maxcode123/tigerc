@@ -2,8 +2,6 @@
 #include "util.h"
 #include "types.h"
 
-// Interpreter function.
-table interp(stm prog);
 
 // Pointer to node of variable table.
 typedef struct table_ *table;
@@ -15,11 +13,14 @@ struct table_ {
     table next;
 };
 
+// Interpreter function.
+table interp(stm prog);
+
 // table constructor.
 table Table(string id, int value, table next);
 
 // Returns the value associated with id in the variable table pointed by h.
-static int _get(string id, table h);
+int get(string id, table h);
 
 // Prints the values in the variable table pointed by h.
 static void _print(table h);

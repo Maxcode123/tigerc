@@ -16,7 +16,7 @@ table Table(string id, int value, table next)
     return t;
 }
 
-static int _get(string id, table h)
+int get(string id, table h)
 {
     table n = h;
     while (n != NULL)
@@ -69,7 +69,7 @@ intAndTable IntAndTable(int i, table h)
 
 intAndTable interpExp(exp e, table h)
 {
-    if (e->kind == idExp) return IntAndTable(_get(e->u.id, h), h);
+    if (e->kind == idExp) return IntAndTable(get(e->u.id, h), h);
     else if (e->kind == numExp) return IntAndTable(e->u.num, h);
     else if (e->kind == opExp) return _interp_opExp(e, h);
     else return interpExp(e->u.eseq.exprs, interpStm(e->u.eseq.stmt, h));
