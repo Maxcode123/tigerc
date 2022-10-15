@@ -1,10 +1,10 @@
 #include "interp.h"
 
-void interp(stm prog)
+table interp(stm prog)
 {
     table h = NULL;
     h = interpStm(prog, h);
-    _print(h);
+    return h;
 }
 
 table Table(string id, int value, table next)
