@@ -6,6 +6,7 @@ OBJS=$(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 TEST=test
 ARGS=
 
+test: test-maxargs test-interp
 
 test-maxargs: $(TEST)/bin/maxargs
 	$<
