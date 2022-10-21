@@ -1,3 +1,5 @@
+#pragma once
+
 #include "util.h"
 
 typedef union  {
@@ -50,4 +52,3 @@ extern YYSTYPE yylval;
 # define FUNCTION 297
 # define VAR 298
 # define TYPE 299
-
