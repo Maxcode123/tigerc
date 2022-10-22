@@ -3,8 +3,6 @@
  *              error messages about the Tiger program.
  *
  */
-#pragma once
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
