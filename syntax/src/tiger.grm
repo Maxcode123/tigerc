@@ -34,7 +34,30 @@ void yyerror(char *s)
 
 %%
 
-program: exp
+program: /* empty */
+        |'\n'
+        | exp
+        | exp '\n'
+        | program '\n' program
+
+exp: decs
+    | lvalue
+    | lvalue ASSIGN exp
+    | LPAREN exp RPAREN
+    | INT
+    | NIL
+    | MINUS INT
+    | funcall
+    | opexp
+    | comexp
+    | boolexp
+    | create
+    | ifclause
+    | whileclause
+    | forclause
+    | BREAK
+    | let
+    | exp COMMA exp
 
 decs: /* empty */
     | dec
@@ -63,25 +86,6 @@ fundec: FUNCTION ID LPAREN tyfields RPAREN EQ exp
 lvalue: ID
     | lvalue DOT ID
     | lvalue LBRACK exp RBRACK
-
-exp: decs
-    | lvalue
-    | lvalue ASSIGN exp
-    | LPAREN exp RPAREN
-    | INT
-    | NIL
-    | MINUS INT
-    | funcall
-    | opexp
-    | comexp
-    | boolexp
-    | create
-    | ifclause
-    | whileclause
-    | forclause
-    | BREAK
-    | let
-    | exp COMMA exp
 
 funcall: ID LPAREN RPAREN
     | ID LPAREN explist RPAREN
