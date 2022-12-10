@@ -5,6 +5,9 @@ OBJ=obj
 OBJS=$(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 ARGS=-g
 
+test: a.out
+	./$< test.tig
+
 a.out: $(OBJ)/parsetest.o $(OBJ)/y.tab.o $(OBJ)/lex.yy.o $(OBJ)/errormsg.o $(OBJ)/util.o
 	$(CC) $(ARGS) $^
 

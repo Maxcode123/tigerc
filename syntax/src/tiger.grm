@@ -39,7 +39,17 @@ void yyerror(char *s)
  *  to replace the two dummy productions below with an actual grammar. 
  */
 
-program:	exp
+program: dec
 
-exp:   ID
+dec: tydec
+
+tydec: TYPE ID EQ ty
+
+ty: ID
+    | LBRACE tyfields RBRACE
+    | ARRAY OF ID
+  
+tyfields: /* empty */
+    | ID COLON ID
+    | tyfields COMMA tyfields
 
