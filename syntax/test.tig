@@ -1,1 +1,1 @@
-type sdas = { f: int, f2: int }
+type sdas := array of int, type asdsa := {}

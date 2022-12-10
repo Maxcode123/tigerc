@@ -39,11 +39,13 @@ void yyerror(char *s)
  *  to replace the two dummy productions below with an actual grammar. 
  */
 
-program: dec
+program: exp
 
 dec: tydec
+    | vardec
+    | fundec
 
-tydec: TYPE ID EQ ty
+tydec: TYPE ID ASSIGN ty
 
 ty: ID
     | LBRACE tyfields RBRACE
@@ -53,3 +55,51 @@ tyfields: /* empty */
     | ID COLON ID
     | tyfields COMMA tyfields
 
+vardec: VAR ID ASSIGN exp
+    | VAR ID COLON ID ASSIGN exp
+
+fundec: FUNCTION ID LPAREN tyfields RPAREN EQ exp
+    | FUNCTION ID LPAREN tyfields RPAREN COLON ID EQ exp
+
+lvalue: ID
+    | lvalue DOT ID
+    | lvalue LBRACK exp RBRACK
+
+exp: dec
+    | lvalue
+    | LPAREN RPAREN
+    | INT
+    | NIL
+    | MINUS INT
+    | funcall
+    | opexp
+    | comexp
+    | boolexp
+    | exp COMMA exp
+
+funcall: ID LPAREN RPAREN
+    | ID LPAREN explist RPAREN
+
+explist: exp
+    | explist COMMA exp
+
+opexp: exp op exp
+
+op: PLUS
+    | MINUS
+    | TIMES
+    | DIVIDE
+
+comexp: exp com exp
+
+com: EQ
+    | NEQ
+    | LT
+    | LE
+    | GT
+    | GE
+
+boolexp: exp boolop exp
+
+boolop: AND
+    | OR
