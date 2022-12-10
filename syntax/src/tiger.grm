@@ -34,12 +34,11 @@ void yyerror(char *s)
 
 %%
 
-/* This is a skeleton grammar file, meant to illustrate what kind of
- * declarations are necessary above the %% mark.  Students are expected
- *  to replace the two dummy productions below with an actual grammar. 
- */
-
 program: exp
+
+decs: /* empty */
+    | dec
+    | decs COMMA decs
 
 dec: tydec
     | vardec
@@ -65,9 +64,10 @@ lvalue: ID
     | lvalue DOT ID
     | lvalue LBRACK exp RBRACK
 
-exp: dec
+exp: decs
     | lvalue
-    | LPAREN RPAREN
+    | lvalue ASSIGN exp
+    | LPAREN exp RPAREN
     | INT
     | NIL
     | MINUS INT
@@ -75,6 +75,12 @@ exp: dec
     | opexp
     | comexp
     | boolexp
+    | create
+    | ifclause
+    | whileclause
+    | forclause
+    | BREAK
+    | let
     | exp COMMA exp
 
 funcall: ID LPAREN RPAREN
@@ -103,3 +109,30 @@ boolexp: exp boolop exp
 
 boolop: AND
     | OR
+
+create: record
+    | array
+
+record: ID LBRACE rfields RBRACE
+
+rfields: ID EQ exp
+    | rfields COMMA rfields
+
+array: ID LBRACK exp RBRACK OF exp
+
+ifclause: ifelse
+    | ifthen
+
+ifelse: IF exp THEN exp ELSE exp
+
+ifthen: IF exp THEN exp
+
+whileclause: WHILE exp DO exp
+
+forclause: FOR ID ASSIGN exp TO exp DO exp
+
+let: LET decs IN expseq END
+
+expseq: /* empty */
+    | exp
+    | expseq SEMICOLON expseq
