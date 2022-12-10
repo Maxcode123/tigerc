@@ -1,4 +1,4 @@
-extern bool EM_anyErrors;
+extern Bool EM_anyErrors;
 
 void EM_newline(void);
 
