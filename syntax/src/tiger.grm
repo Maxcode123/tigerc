@@ -35,10 +35,7 @@ void yyerror(char *s)
 %%
 
 program: /* empty */
-        |'\n'
         | exp
-        | exp '\n'
-        | program '\n' program
 
 exp: decs
     | lvalue
@@ -67,7 +64,7 @@ dec: tydec
     | vardec
     | fundec
 
-tydec: TYPE ID ASSIGN ty
+tydec: TYPE ID EQ ty
 
 ty: ID
     | LBRACE tyfields RBRACE
