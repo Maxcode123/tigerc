@@ -28,23 +28,25 @@ void yyerror(char *s)
   AND OR ASSIGN
   ARRAY IF THEN ELSE WHILE FOR TO DO LET IN END OF 
   BREAK NIL
-  FUNCTION VAR TYPE 
+  FUNCTION VAR TYPE
+  UMINUS
+
+%left TIMES DIVIDE PLUS MINUS
+%nonassoc EQ NEQ LT LE GT GE
+%left UMINUS
 
 %start program
 
 %%
 
-program: /* empty */
-        | exp
+program: exp
         | program exp
 
 exp: decs
     | lvalue
     | lvalue ASSIGN exp
-    | LPAREN exp RPAREN
     | INT
     | NIL
-    | MINUS INT
     | funcall
     | opexp
     | comexp
@@ -55,7 +57,8 @@ exp: decs
     | forclause
     | BREAK
     | let
-    | exp COMMA exp
+    | LPAREN expseq RPAREN
+    | MINUS exp %prec UMINUS
 
 decs: /* empty */
     | dec
@@ -135,6 +138,5 @@ forclause: FOR ID ASSIGN exp TO exp DO exp
 
 let: LET decs IN expseq END
 
-expseq: /* empty */
-    | exp
+expseq: exp
     | expseq SEMICOLON expseq
