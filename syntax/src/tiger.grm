@@ -36,6 +36,7 @@ void yyerror(char *s)
 
 program: /* empty */
         | exp
+        | program exp
 
 exp: decs
     | lvalue
